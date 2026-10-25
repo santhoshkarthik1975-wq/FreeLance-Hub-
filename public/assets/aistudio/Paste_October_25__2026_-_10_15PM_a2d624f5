@@ -1,0 +1,2003 @@
+# MASTER PROJECT PROMPT — FREELANCE HUB
+## Complete MERN Stack Freelance Marketplace | Production-Inspired College Project
+
+Act as a senior full-stack engineer, software architect, database designer, UI/UX designer, QA engineer, and security engineer.
+
+Your task is to DESIGN, IMPLEMENT, TEST, AND DELIVER a complete, professional freelance marketplace web application called **Freelance Hub**.
+
+This is not a request for a project plan, wireframe, static mockup, tutorial, or collection of code snippets. Build the actual working application with frontend pages, backend APIs, persistent database models, authentication, business workflows, validation, error handling, demo data, and setup instructions.
+
+I have limited time and need a demonstrable MVP tonight. Work autonomously through the implementation without asking for approval between phases. Make reasonable engineering decisions and continue until the application is functional. If a feature is too expensive to implement within the available time, implement a smaller, honest, working version rather than leaving broken placeholders.
+
+---
+
+# 1. PRODUCT VISION
+
+Freelance Hub is a two-sided marketplace that connects companies with freelancers.
+
+Companies can publish projects, review applicants, hire freelancers, manage contracts and milestones, evaluate submitted work, and record simulated payments.
+
+Freelancers can create professional profiles, discover projects, submit applications, manage active contracts, submit deliverables, monitor progress, and view earnings and payment records.
+
+The platform must have two distinct experiences:
+
+1. Freelancer workspace
+2. Company workspace
+
+Each role must have its own authentication flow, profile, dashboard, navigation, permissions, and workflows.
+
+The application must look like a polished commercial SaaS product that could be demonstrated to faculty, recruiters, or project evaluators.
+
+Product name: Freelance Hub
+
+Product tagline: Find Talent. Build Great Work.
+
+Primary goal: Deliver a working end-to-end freelance marketplace with persistent data and a professional interface.
+
+Secondary goal: Keep the architecture maintainable so additional features can be added later.
+
+---
+
+# 2. NON-NEGOTIABLE EXECUTION RULES
+
+1. Build the actual application. Do not stop after writing architecture or documentation.
+2. Work through all implementation stages continuously without requesting phase-by-phase approval.
+3. Inspect existing files before modifying them. Preserve useful existing work.
+4. Use consistent imports, naming, API contracts, schemas, and frontend types.
+5. Avoid unnecessary abstractions and overengineering.
+6. Do not create buttons that do nothing.
+7. Do not display fake success messages when an operation fails.
+8. Do not generate fake analytics and present them as real database results.
+9. Every major form must have validation, loading states, success feedback, and error feedback.
+10. Use persistent database operations rather than relying on browser-only mock arrays for core functionality.
+11. Keep the main workflow functional even if optional features need to be simplified.
+12. Never expose JWT secrets, database credentials, or private environment variables to the browser.
+13. Do not claim tests passed unless they were actually executed successfully.
+14. Continue fixing implementation errors instead of stopping at the first build failure.
+15. If output or execution limits interrupt implementation, preserve completed work and continue from the existing codebase.
+16. Do not overwrite unrelated project files without inspecting them first.
+17. Use compatible, stable dependencies and commands appropriate to the runtime.
+18. Do not spend excessive time on advanced features before completing authentication, projects, applications, hiring, contracts, and milestones.
+
+Prioritize functional completeness, visual quality, reliability, and clear setup instructions.
+
+---
+
+# 3. TECHNOLOGY STACK
+
+## Frontend
+
+Use:
+
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- React Router
+- Axios
+- Framer Motion
+- Lucide React
+- Recharts
+- React Hook Form
+- Zod
+- A compatible toast notification library
+- Reusable accessible UI components
+
+Use a consistent, modern React architecture. Avoid putting the entire application in one giant component.
+
+Use TypeScript for application components, API responses, form data, and shared domain types.
+
+## Backend
+
+Use:
+
+- Node.js
+- TypeScript where compatible with the chosen server configuration
+- Express
+- MongoDB
+- Mongoose
+- Zod for request validation
+- bcryptjs for password hashing
+- JWT for authentication
+- Helmet
+- CORS with explicit origin configuration
+- Cookie parsing where applicable
+- Rate limiting for sensitive endpoints
+- Structured logging
+- Centralized error handling
+
+Use compatible, stable versions that work together. Verify available runtime versions before choosing dependencies. Do not insist on an incompatible package major version.
+
+## Development tools
+
+Provide:
+
+- Root-level development scripts where practical
+- Separate frontend and backend scripts
+- Environment variable examples
+- Seed scripts
+- Build scripts
+- Automated tests for critical functionality
+- A README with Windows setup instructions
+
+---
+
+# 4. ENVIRONMENT AND DATABASE REQUIREMENTS
+
+My computer already has MongoDB Community Server installed locally and I have successfully connected to it through MongoDB Compass.
+
+My local development database must be:
+
+mongodb://127.0.0.1:27017/freelance_hub
+
+Use the database name:
+
+freelance_hub
+
+Important environment distinction:
+
+Google AI Studio's cloud execution environment cannot automatically access MongoDB running on my laptop through localhost. Do not assume the cloud preview can reach my local MongoDB instance.
+
+Design the application so that:
+
+- The exported application can run locally on my Windows laptop using my installed MongoDB.
+- The cloud preview can use a separately configured, reachable database if supported by the execution environment.
+- Database configuration is controlled through server-side environment variables.
+- No database URI or secret is hardcoded in frontend source code.
+- The application provides a clear startup error when the database cannot be reached.
+- No connection string, password, or signing secret is committed to the repository.
+
+Backend `.env.example` should include appropriate variables such as:
+
+PORT=5000
+NODE_ENV=development
+MONGODB_URI=mongodb://127.0.0.1:27017/freelance_hub
+JWT_SECRET=replace_with_a_long_random_secret
+CLIENT_URL=http://localhost:5173
+COOKIE_SECRET=replace_with_a_long_random_secret
+
+Add other variables only when required by the implementation.
+
+Create a health endpoint that reports application health and database connectivity without disclosing secrets.
+
+Example endpoints:
+
+GET /health
+GET /api/v1/health
+
+Choose one canonical health route and document it consistently. An optional alias is acceptable.
+
+Do not configure localhost MongoDB as a working cloud database. Explain how to switch the exported project to local MongoDB.
+
+Do not require MongoDB Atlas, replica-set configuration, paid services, or payment-provider credentials for the local MVP.
+
+---
+
+# 5. DESIGN SYSTEM AND VISUAL DIRECTION
+
+Build a premium, contemporary SaaS interface.
+
+The result should feel like a thoughtfully designed combination of a professional freelancer marketplace and a polished project management dashboard.
+
+Avoid generic, unfinished admin templates.
+
+## Visual identity
+
+Product: Freelance Hub
+
+Suggested palette:
+
+- Primary: Indigo / deep violet
+- Accent: Blue
+- Background: Soft neutral white or light gray
+- Text: Deep charcoal
+- Borders: Subtle neutral gray
+- Success: Restrained green
+- Warning: Amber
+- Destructive actions: Red
+- Dark sections: Deep navy when appropriate
+
+Use a consistent design token system so colors can be changed centrally.
+
+## Typography
+
+Use a modern, readable font such as Inter or a suitable locally available system font.
+
+Use a clear hierarchy:
+
+- Large, confident page titles
+- Compact section headings
+- Readable body text
+- Small, muted labels
+- Consistent numeric and currency formatting
+
+## Layout
+
+Implement:
+
+- Responsive application shell
+- Collapsible sidebar on smaller screens
+- Top navigation/header
+- Page titles and contextual descriptions
+- Breadcrumbs where useful
+- Search bars
+- Filters
+- Cards and data tables
+- Status badges
+- Modal dialogs and confirmation prompts
+- Dropdown menus
+- Form validation messages
+- Toast notifications
+- Skeleton loaders
+- Empty states
+- Error states
+- Pagination or incremental loading where appropriate
+
+Use consistent spacing, border radii, shadows, transitions, and interaction patterns.
+
+## Motion
+
+Use Framer Motion for restrained transitions:
+
+- Page transitions
+- Sidebar and menu interactions
+- Modal entry and exit
+- Card hover states
+- Small loading and feedback animations
+
+Animations must not obstruct usability.
+
+## Accessibility
+
+Provide:
+
+- Semantic HTML
+- Visible focus states
+- Keyboard-accessible controls
+- Labels for form fields
+- Appropriate contrast
+- Accessible modal behavior
+- Reduced-motion support where practical
+- Responsive layouts without horizontal overflow
+
+Do not use emoji as a substitute for the application's icon system.
+
+---
+
+# 6. PUBLIC PAGES AND AUTHENTICATION
+
+Implement these public routes:
+
+- /
+- /login/freelancer
+- /login/company
+- /register/freelancer
+- /register/company
+- /forgot-password
+- /unauthorized
+- A custom 404 page
+
+## Landing page
+
+Create an attractive landing page containing:
+
+- Professional navigation
+- Product logo and brand identity
+- Hero headline and description
+- Primary CTA: Find Projects
+- Secondary CTA: Hire Talent
+- How It Works section
+- Freelancer benefits
+- Company benefits
+- Platform workflow explanation
+- Feature highlights
+- Statistics only when sourced from actual data or clearly labeled as illustrative
+- Testimonials only when explicitly labeled as sample/demo content
+- Final CTA
+- Footer with useful links
+
+Do not present invented real customers, real testimonials, or unsupported business statistics as factual.
+
+## Role-specific registration
+
+Freelancer registration fields:
+
+- Full name
+- Email
+- Password
+- Confirm password
+- Professional title, optional
+- Skills, optional
+- Agree to terms checkbox
+
+Company registration fields:
+
+- Contact person's full name
+- Work email
+- Company name
+- Password
+- Confirm password
+- Industry, optional
+- Agree to terms checkbox
+
+Requirements:
+
+- Validate email format.
+- Enforce reasonable password requirements.
+- Hash passwords using bcryptjs.
+- Enforce unique email addresses.
+- Prevent a user from elevating their own role through a request payload.
+- Provide meaningful duplicate-account errors.
+- Redirect each role to the correct dashboard.
+- Provide password visibility toggles.
+- Show loading and error states.
+- Include links between login and registration pages.
+
+Implement a forgot-password interface honestly. If there is no email service configured, provide a clearly labeled development-only reset mechanism or explain that production password recovery requires an email provider. Do not claim emails were sent if they were not.
+
+---
+
+# 7. AUTHENTICATION AND AUTHORIZATION
+
+Implement secure, role-aware authentication.
+
+Preferred browser authentication:
+
+- Short-lived JWT stored in an HttpOnly cookie
+- Secure cookie settings in production
+- Appropriate SameSite configuration
+- Server-side authentication middleware
+- Role-based authorization middleware
+- CSRF protection for cookie-authenticated state-changing requests
+- Explicit CORS origin configuration
+- Credentials enabled only for approved origins
+
+If the chosen deployment environment makes cookie authentication impractical, use another documented secure approach. Never store passwords or private signing secrets in localStorage.
+
+Create middleware for:
+
+- Authentication
+- Freelancer-only access
+- Company-only access
+- Resource ownership
+- Request validation
+- Rate limiting where appropriate
+- Centralized errors
+
+Implement:
+
+- Register
+- Login
+- Get current user
+- Logout
+- Optional token/session refresh if practical
+
+Every protected API endpoint must verify the user and their permissions on the server.
+
+Frontend route guards improve the user experience but must never be the only authorization layer.
+
+A freelancer must not access another freelancer's private data.
+
+A company must not modify another company's postings, applications, or contracts.
+
+---
+
+# 8. FREELANCER WORKSPACE
+
+Create a complete freelancer dashboard with the following sidebar navigation in this order:
+
+1. Overview
+2. Analytics
+3. Find Projects
+4. My Applications
+5. Active Jobs
+6. Completed Jobs
+7. My Profile
+8. Earnings & Payments
+9. Notifications
+10. Logout
+
+Use these routes:
+
+- /freelancer
+- /freelancer/analytics
+- /freelancer/projects
+- /freelancer/applications
+- /freelancer/jobs
+- /freelancer/completed
+- /freelancer/profile
+- /freelancer/payments
+- /freelancer/notifications
+
+## A. Overview dashboard
+
+Show:
+
+- Welcome message
+- Profile completion indicator
+- Total applications
+- Pending applications
+- Active jobs
+- Completed jobs
+- Total earnings
+- Pending demo payments
+- Recent applications
+- Recent notifications
+- Recommended projects based on skills
+- A chart showing actual application or earnings trends when data exists
+
+All values must be computed from database records.
+
+Provide useful empty states when no activity exists.
+
+## B. Freelancer profile
+
+Support editing:
+
+- Full name
+- Profile headline
+- Biography
+- Skills
+- Experience level
+- Years of experience
+- Hourly rate
+- Location as optional text
+- Portfolio URL
+- GitHub URL
+- LinkedIn URL
+- Profile image URL
+- Availability
+- Languages, optional
+
+Validate URLs and field lengths.
+
+Display profile completion based on actual populated fields.
+
+Do not implement arbitrary local filesystem paths as profile image URLs.
+
+## C. Find Projects
+
+Create a discoverable project marketplace with:
+
+- Search by title and description
+- Filter by skill
+- Filter by budget range
+- Filter by project type
+- Filter by experience level
+- Sort by newest
+- Sort by budget
+- Pagination
+- Clear filters
+- Project detail view
+
+Each project card should display:
+
+- Title
+- Short description
+- Company name
+- Required skills
+- Budget
+- Project type
+- Experience level
+- Deadline if supplied
+- Posted date
+- Number of applications when appropriate
+- Posting status
+- View Details action
+- Apply action
+
+Only open postings can receive new applications.
+
+## D. Application submission
+
+Provide an application form with:
+
+- Cover letter
+- Proposed budget or bid amount
+- Estimated completion time
+- Optional relevant portfolio URL
+
+Prevent duplicate applications for the same freelancer and posting.
+
+Show an appropriate message if the freelancer has already applied.
+
+Application statuses:
+
+- Pending
+- Accepted
+- Rejected
+- Withdrawn
+
+Freelancers can withdraw their own pending applications, subject to the chosen business rules.
+
+They cannot change their status to Accepted or create contracts directly.
+
+## E. My Applications
+
+Provide:
+
+- Table or card view
+- Search and status filters
+- Project title
+- Company
+- Applied date
+- Proposed budget
+- Application status
+- View details
+- Withdraw pending application
+
+## F. Active Jobs
+
+Display contracts associated with the authenticated freelancer that are currently active.
+
+Include:
+
+- Project title
+- Hiring company
+- Contract amount
+- Contract start date
+- Next milestone
+- Overall progress
+- Milestone list
+- Due dates
+- Submission history
+- Submit deliverable action
+
+## G. Completed Jobs
+
+Display completed contracts, including:
+
+- Project title
+- Company
+- Final agreed amount
+- Completion date
+- Milestone completion summary
+- Review received, if available
+
+## H. Earnings & Payments
+
+Display actual persisted payment records.
+
+Include:
+
+- Total completed demo payments
+- Pending payments
+- Payment history
+- Project or contract reference
+- Milestone reference
+- Amount and currency
+- Payment status
+- Created date
+- Completed date, where applicable
+
+Clearly display a banner:
+
+"Demo payments only — no real money is transferred."
+
+Do not present simulated funds as withdrawable real cash.
+
+## I. Notifications
+
+Display notifications for:
+
+- Application accepted
+- Application rejected
+- New contract
+- Milestone deadline
+- Deliverable approved
+- Revision requested
+- Demo payment completed
+- Other important account events
+
+Provide read/unread status and mark-as-read functionality.
+
+---
+
+# 9. COMPANY WORKSPACE
+
+Create a distinct company dashboard.
+
+The sidebar must contain exactly these primary navigation items:
+
+1. Home
+2. Company Profile
+3. Analytics
+4. Active Jobs
+5. Completed Jobs
+6. Job Postings — dropdown
+   - Active Postings
+   - Previous Postings
+7. Payments
+8. Notifications
+9. Logout
+
+Implement the following routes:
+
+- /company
+- /company/profile
+- /company/analytics
+- /company/jobs
+- /company/completed
+- /company/postings/active
+- /company/postings/previous
+- /company/payments
+- /company/notifications
+
+The Job Postings item must be a functional expandable/collapsible dropdown. It must display the two nested items clearly and preserve their navigation state.
+
+## A. Company home
+
+Display:
+
+- Welcome message
+- Company profile completion
+- Active job count
+- Active posting count
+- Applications received
+- Pending applications requiring review
+- Active contracts
+- Completed contracts
+- Total contract value
+- Outstanding demo payment records
+- Recent applications
+- Recent projects
+- Recent notifications
+- Recent activity
+
+All dashboard figures must be derived from actual stored records.
+
+## B. Company profile
+
+Editable fields:
+
+- Company name
+- Company logo URL
+- Industry
+- Description
+- Website URL
+- Location
+- Company size
+- Contact person's name
+- Public contact email, if desired
+- Social profile URLs
+
+Validate fields and display the company profile publicly where appropriate.
+
+Do not expose internal account details or private authentication information.
+
+## C. Company analytics
+
+Provide charts and summaries for:
+
+- Postings created over time
+- Applications received
+- Hiring conversion rate
+- Active versus completed contracts
+- Spending by month
+- Project completion rate
+- Application status distribution
+
+Use Recharts and actual database aggregation.
+
+Handle empty data without rendering misleading charts.
+
+## D. Active Jobs
+
+Show contracts that have started or are in progress.
+
+Include:
+
+- Project title
+- Freelancer name
+- Agreed amount
+- Contract status
+- Milestone completion percentage
+- Current milestone
+- Upcoming deadline
+- Pending submissions
+- View contract action
+
+## E. Completed Jobs
+
+Show successfully completed contracts.
+
+Include:
+
+- Project
+- Freelancer
+- Agreed amount
+- Completion date
+- Milestone summary
+- Review or rating, when available
+
+## F. Job Postings — Active Postings
+
+This page must display postings that are open or awaiting a hiring decision.
+
+Include:
+
+- Search
+- Status filters
+- Create Posting button
+- Project title
+- Budget
+- Skills
+- Posting date
+- Application count
+- Posting status
+- Edit
+- View details
+- Review applications
+- Close posting
+
+Only postings owned by the logged-in company may appear in this company's management view.
+
+Do not allow a company to close or edit another company's posting.
+
+## G. Job Postings — Previous Postings
+
+Display postings with terminal or archived statuses, including:
+
+- Filled
+- Closed
+- Cancelled
+- Archived
+
+Include filters, search, project details, final status, creation date, and completion or closure information where applicable.
+
+Provide an archive/reopen option only if it is implemented safely and does not invalidate existing contracts.
+
+A posting must not disappear from the company history after a freelancer is hired.
+
+## H. Create and edit project posting
+
+Create a complete form with:
+
+- Project title
+- Short summary
+- Detailed description
+- Required skills
+- Minimum budget
+- Maximum budget
+- Currency
+- Fixed-price or hourly project type
+- Experience level
+- Expected duration
+- Optional deadline
+- Optional attachment URL
+- Additional requirements
+- Publication status
+
+Validate that:
+
+- Title and description meet minimum length requirements.
+- Budget values are valid.
+- Minimum budget does not exceed maximum budget.
+- Currency is supported by the application's configured list.
+- Deadline, when supplied, is valid.
+- Required skills are not empty.
+- The posting belongs to the authenticated company.
+
+Provide save-draft and publish actions if practical.
+
+## I. Application management
+
+For every posting, companies must be able to:
+
+- View applicants
+- View freelancer profiles
+- View cover letters
+- View proposed budgets
+- View estimated delivery times
+- Accept an application
+- Reject an application
+- Review application status
+
+When a company accepts an application:
+
+1. Verify company ownership of the posting.
+2. Verify the posting is eligible for hiring.
+3. Verify the application is pending.
+4. Prevent duplicate contracts.
+5. Create the contract using the accepted application and agreed amount.
+6. Update the accepted application's status.
+7. Update competing pending applications according to the documented business rule.
+8. Update the posting's status to Filled.
+9. Create notifications for affected users.
+10. Ensure the whole workflow cannot be duplicated accidentally by repeated requests.
+
+Use database constraints and atomic operations where practical. Since local MongoDB may be running as a standalone server, do not require multi-document transactions.
+
+Document any remaining concurrency limitations honestly.
+
+## J. Company payments
+
+Show persisted demo payment records with:
+
+- Freelancer
+- Project
+- Milestone
+- Amount
+- Currency
+- Payment status
+- Created date
+- Completed date
+
+Do not imply that companies have made real financial transfers.
+
+---
+
+# 10. PROJECT AND POSTING LIFECYCLE
+
+Use explicit, documented status values.
+
+Posting statuses:
+
+- Draft
+- Open
+- Filled
+- Closed
+- Cancelled
+- Archived
+
+Suggested lifecycle:
+
+Draft → Open → Filled
+
+Draft → Open → Closed
+
+Draft → Cancelled
+
+Open → Closed
+
+Open → Cancelled
+
+Open → Filled
+
+Terminal postings may optionally be archived.
+
+Rules:
+
+- Only Open postings accept applications.
+- Only the owner can edit or manage a posting.
+- Filled postings remain visible in the company's previous postings.
+- Closing a posting must not delete applications or active contracts.
+- Deleting a posting should be restricted when applications or contracts depend on it. Prefer archival over destructive deletion.
+
+Make status transitions explicit in backend services rather than accepting arbitrary status strings from the browser.
+
+---
+
+# 11. CONTRACT MANAGEMENT
+
+Create a Contract collection separate from ProjectPosting.
+
+A contract should contain:
+
+- Posting reference
+- Application reference
+- Company reference
+- Freelancer reference
+- Contract title
+- Agreed amount
+- Currency
+- Project type
+- Start date
+- Optional expected completion date
+- Status
+- Milestone references
+- Created date
+- Updated date
+- Completion date when applicable
+
+Contract statuses:
+
+- Active
+- Completed
+- Cancelled
+- Disputed
+
+Keep the contract's agreed amount independent of subsequent edits to the original posting.
+
+When a company hires a freelancer, create the contract from the accepted application and explicitly determine the agreed amount from the accepted proposal and company decision.
+
+Only the company and freelancer attached to the contract may access it.
+
+Do not let unrelated users view private contract information.
+
+---
+
+# 12. MILESTONES AND DELIVERABLE SUBMISSIONS
+
+Contracts must support multiple milestones.
+
+Milestone fields:
+
+- Contract reference
+- Title
+- Description
+- Amount allocated
+- Currency
+- Due date
+- Status
+- Sequence number
+- Submission history
+- Created date
+- Updated date
+
+Milestone statuses:
+
+- Pending
+- In Progress
+- Submitted
+- Revision Requested
+- Approved
+- Paid
+
+Implement a practical lifecycle:
+
+Pending → In Progress → Submitted → Approved → Paid
+
+Submitted → Revision Requested → In Progress → Submitted
+
+A milestone cannot be approved by the freelancer who submitted it.
+
+Only the contract's company can approve or request revisions.
+
+The freelancer can submit deliverables with:
+
+- Submission message
+- Deliverable URL
+- Optional attachment URL
+- Submission timestamp
+
+Do not allow arbitrary local file paths to be treated as uploaded files.
+
+A revision request must include feedback.
+
+Keep previous submissions in history where practical.
+
+The contract becomes Completed only when the defined completion criteria are met, such as all required milestones being approved and all required payment records reaching their configured terminal state. Document the exact rule used.
+
+---
+
+# 13. SIMULATED PAYMENT SYSTEM
+
+Implement a safe, clearly labeled demo payment subsystem.
+
+This is not a real payment gateway.
+
+Do not collect card details, banking passwords, or payment credentials.
+
+Create a Payment model containing:
+
+- Contract reference
+- Milestone reference
+- Company reference
+- Freelancer reference
+- Amount in integer minor units
+- Currency
+- Provider identifier such as DEMO
+- Idempotency key
+- Payment status
+- Created date
+- Completed date
+- Optional failure reason
+
+Payment statuses:
+
+- Pending
+- Processing
+- Completed
+- Failed
+- Cancelled
+
+Use integer minor units for monetary amounts instead of floating-point storage.
+
+Use a currency-aware formatting utility for displaying amounts.
+
+Implement a demo flow in which an authorized company can initiate payment for an eligible approved milestone. The server records the simulated payment and updates the milestone appropriately.
+
+Requirements:
+
+- A payment cannot be initiated for an unrelated contract.
+- An unapproved milestone cannot be paid.
+- Duplicate requests must not create duplicate successful payment records.
+- The server calculates the amount using trusted contract/milestone data, not an arbitrary client-provided amount.
+- Payment status changes must be validated.
+- No real money is transferred.
+- Show the demo-payment warning throughout payment-related pages.
+
+If an asynchronous simulated processing step is too costly, implement a clear synchronous demo success flow while retaining safe validation and idempotency.
+
+Do not invent payment-provider integration.
+
+---
+
+# 14. NOTIFICATIONS
+
+Create a persistent Notification model.
+
+Fields:
+
+- Recipient user reference
+- Notification type
+- Title
+- Message
+- Optional related resource type
+- Optional related resource ID
+- Read/unread status
+- Created date
+- Read date
+
+Create notifications for important actions:
+
+- Application submitted
+- Application accepted
+- Application rejected
+- Posting filled
+- Contract created
+- Milestone submitted
+- Revision requested
+- Milestone approved
+- Demo payment completed
+- Contract completed
+
+Implement:
+
+- List notifications for the current user
+- Unread count
+- Mark one as read
+- Mark all as read
+- Navigate to a related resource where supported
+
+A user must not read or modify another user's notifications.
+
+Real-time WebSocket delivery is optional. Persistent notifications and polling/manual refresh are sufficient for the MVP.
+
+---
+
+# 15. REVIEWS AND RATINGS
+
+Implement a simple two-sided review system for completed contracts.
+
+Fields:
+
+- Contract reference
+- Reviewer reference
+- Reviewee reference
+- Rating from 1 to 5
+- Review text
+- Created date
+
+Rules:
+
+- Only parties to the contract can review one another.
+- Reviews are allowed only when the contract is completed.
+- Enforce one review per reviewer per contract.
+- Validate rating and text length.
+- Display aggregate ratings based on persisted reviews.
+- Do not fabricate reviews or ratings.
+
+If time is limited, implement the database model, backend validation, and a simple review form after the main project workflow works.
+
+---
+
+# 16. DATA MODELS AND DATABASE INTEGRITY
+
+Implement Mongoose models for:
+
+1. User
+2. FreelancerProfile
+3. CompanyProfile
+4. ProjectPosting
+5. Application
+6. Contract
+7. Milestone
+8. DeliverableSubmission
+9. Payment
+10. Notification
+11. Review
+
+Optional models, if useful:
+
+12. ActivityLog
+13. ContactMessage
+
+Do not create unnecessary duplicate data structures.
+
+## User
+
+Fields:
+
+- Name
+- Normalized email
+- Password hash
+- Role: FREELANCER or COMPANY
+- Account status
+- Created date
+- Updated date
+
+Never return the password hash in API responses.
+
+## FreelancerProfile
+
+Fields:
+
+- User reference
+- Headline
+- Biography
+- Skills
+- Experience level
+- Years of experience
+- Hourly rate
+- Currency
+- Location
+- Portfolio URL
+- GitHub URL
+- LinkedIn URL
+- Profile image URL
+- Availability
+- Languages
+
+## CompanyProfile
+
+Fields:
+
+- User reference
+- Company name
+- Logo URL
+- Industry
+- Description
+- Website
+- Location
+- Company size
+- Contact name
+- Public contact email
+- Social links
+
+## ProjectPosting
+
+Fields:
+
+- Company reference
+- Title
+- Summary
+- Description
+- Skills
+- Minimum budget
+- Maximum budget
+- Currency
+- Project type
+- Experience level
+- Expected duration
+- Optional deadline
+- Attachment URLs
+- Requirements
+- Posting status
+- Published date
+- Created date
+- Updated date
+
+## Application
+
+Fields:
+
+- Posting reference
+- Freelancer reference
+- Cover letter
+- Proposed amount
+- Currency
+- Estimated duration
+- Portfolio URL
+- Application status
+- Applied date
+- Updated date
+
+Enforce one application per freelancer per posting using a unique compound index.
+
+## Contract
+
+Fields:
+
+- Posting reference
+- Application reference
+- Company reference
+- Freelancer reference
+- Agreed amount in minor units
+- Currency
+- Project type
+- Contract status
+- Start date
+- Expected completion date
+- Completion date
+- Created date
+- Updated date
+
+Prevent duplicate contracts for a posting using an appropriate unique index or an equivalent safe constraint.
+
+## Milestone
+
+Fields:
+
+- Contract reference
+- Title
+- Description
+- Amount in minor units
+- Currency
+- Sequence number
+- Due date
+- Status
+- Created date
+- Updated date
+
+## DeliverableSubmission
+
+Fields:
+
+- Milestone reference
+- Submitted by
+- Message
+- Deliverable URLs
+- Attachment URLs
+- Revision feedback, where applicable
+- Created date
+
+## Payment
+
+Use the payment fields defined in the payment section.
+
+## Notification
+
+Use the notification fields defined in the notifications section.
+
+## Review
+
+Use the review fields defined in the reviews section.
+
+Use appropriate indexes for frequent lookups, filtering, uniqueness, and ownership queries.
+
+Store references instead of embedding unbounded histories inside a single document.
+
+Use a consistent convention for ObjectId references, dates, currency, and status values.
+
+Validate ObjectIds and handle missing referenced records correctly.
+
+Do not require multi-document MongoDB transactions because the local standalone installation may not support them.
+
+Use unique indexes, atomic single-document updates, safe sequencing, and idempotent operations wherever possible. Do not claim these eliminate every possible cross-document race condition.
+
+---
+
+# 17. BACKEND API DESIGN
+
+Use a consistent API prefix:
+
+/api/v1
+
+Return predictable JSON responses and appropriate HTTP status codes.
+
+Use a consistent error structure, for example:
+
+{
+  "success": false,
+  "message": "A clear explanation",
+  "code": "VALIDATION_ERROR"
+}
+
+Do not expose stack traces, secrets, or database internals in production responses.
+
+Implement the following API groups.
+
+## Authentication
+
+POST /api/v1/auth/register/freelancer
+
+POST /api/v1/auth/register/company
+
+POST /api/v1/auth/login
+
+POST /api/v1/auth/logout
+
+GET /api/v1/auth/me
+
+Implement additional refresh or CSRF endpoints only when required by the chosen authentication strategy.
+
+## Profiles
+
+GET /api/v1/profiles/freelancer/:id
+
+PUT /api/v1/profiles/freelancer/me
+
+GET /api/v1/profiles/company/:id
+
+PUT /api/v1/profiles/company/me
+
+Public profile responses must omit private fields.
+
+## Project postings
+
+GET /api/v1/projects
+
+GET /api/v1/projects/:id
+
+POST /api/v1/projects
+
+PUT /api/v1/projects/:id
+
+PATCH /api/v1/projects/:id/status
+
+GET /api/v1/company/projects
+
+Support pagination, sorting, keyword search, and validated filters.
+
+## Applications
+
+POST /api/v1/projects/:id/applications
+
+GET /api/v1/freelancer/applications
+
+GET /api/v1/company/projects/:id/applications
+
+GET /api/v1/applications/:id
+
+PATCH /api/v1/applications/:id/withdraw
+
+POST /api/v1/applications/:id/accept
+
+POST /api/v1/applications/:id/reject
+
+Enforce role, ownership, and state-transition rules.
+
+## Contracts
+
+GET /api/v1/contracts
+
+GET /api/v1/contracts/:id
+
+POST /api/v1/contracts/:id/cancel
+
+GET /api/v1/freelancer/contracts
+
+GET /api/v1/company/contracts
+
+Only create contracts through the validated hiring workflow.
+
+## Milestones
+
+GET /api/v1/contracts/:id/milestones
+
+POST /api/v1/contracts/:id/milestones
+
+PATCH /api/v1/milestones/:id
+
+POST /api/v1/milestones/:id/submit
+
+POST /api/v1/milestones/:id/request-revision
+
+POST /api/v1/milestones/:id/approve
+
+Enforce permissions and valid transitions.
+
+## Payments
+
+GET /api/v1/payments
+
+GET /api/v1/payments/:id
+
+POST /api/v1/milestones/:id/pay
+
+Return a clear indication that payments are simulated.
+
+## Notifications
+
+GET /api/v1/notifications
+
+GET /api/v1/notifications/unread-count
+
+PATCH /api/v1/notifications/:id/read
+
+POST /api/v1/notifications/read-all
+
+## Analytics
+
+GET /api/v1/analytics/freelancer
+
+GET /api/v1/analytics/company
+
+Calculate metrics from authorized database records.
+
+## Reviews
+
+POST /api/v1/contracts/:id/reviews
+
+GET /api/v1/contracts/:id/reviews
+
+Add additional endpoints only when they support a real implemented frontend feature.
+
+Keep frontend API calls aligned exactly with implemented backend routes.
+
+---
+
+# 18. BACKEND ARCHITECTURE
+
+Use a clean, modular backend structure.
+
+Suggested structure:
+
+backend/
+  src/
+    config/
+      database
+      environment
+    models/
+    routes/
+    controllers/
+    services/
+    middleware/
+    validators/
+    utils/
+    types/
+    app
+    server
+  scripts/
+    seed
+  tests/
+  .env.example
+  package.json
+  tsconfig.json
+
+Use consistent naming and imports.
+
+Responsibilities:
+
+- Routes define HTTP endpoints.
+- Controllers translate HTTP requests and responses.
+- Services contain business logic.
+- Models define persistence and indexes.
+- Validators validate external input.
+- Middleware handles authentication, authorization, and errors.
+- Utilities contain reusable helpers.
+
+Do not place all logic inside route callbacks.
+
+Use async error handling and meaningful server logs.
+
+Gracefully handle startup failures and invalid environment configuration.
+
+Keep development stack traces useful without exposing sensitive details in production.
+
+---
+
+# 19. FRONTEND ARCHITECTURE
+
+Suggested structure:
+
+frontend/
+  src/
+    app/
+    components/
+      ui/
+      layout/
+      navigation/
+      charts/
+      projects/
+      applications/
+      contracts/
+      milestones/
+      notifications/
+    pages/
+      public/
+      auth/
+      freelancer/
+      company/
+      shared/
+    hooks/
+    services/
+      api
+      auth
+    context/
+    types/
+    utils/
+    schemas/
+    styles/
+    main
+  public/
+  package.json
+  vite.config
+  tsconfig
+  .env.example
+
+Create reusable components such as:
+
+- AppSidebar
+- AppHeader
+- DashboardLayout
+- PageHeader
+- StatCard
+- DataTable
+- SearchInput
+- FilterDropdown
+- StatusBadge
+- EmptyState
+- LoadingSkeleton
+- ErrorState
+- ConfirmDialog
+- FormField
+- SkillBadge
+- ProjectCard
+- ApplicationCard
+- MilestoneTimeline
+- NotificationItem
+- CurrencyDisplay
+- Pagination
+
+Keep role-specific navigation separate.
+
+Use reusable API services and typed responses.
+
+Do not make raw HTTP requests scattered across unrelated components.
+
+Use appropriate cache or state-management patterns without adding unnecessary dependencies.
+
+Protect routes and handle loading the current user on refresh.
+
+Ensure a browser refresh on a nested route does not break the application.
+
+---
+
+# 20. FORM AND ERROR-HANDLING REQUIREMENTS
+
+Every major form must include:
+
+- Field labels
+- Required-field indicators
+- Inline validation
+- Useful error messages
+- Disabled submit while saving
+- Loading indicator
+- Success feedback
+- Server error handling
+- Prevention of accidental double submission
+
+Validate on both client and server.
+
+The backend remains authoritative.
+
+Provide clear handling for:
+
+- Invalid credentials
+- Duplicate email
+- Unauthorized access
+- Forbidden actions
+- Missing records
+- Invalid status transitions
+- Duplicate applications
+- Duplicate payments
+- Network errors
+- Database connection failure
+- Validation errors
+- Empty search results
+
+Never silently swallow errors.
+
+Never display a success toast if the server rejected the operation.
+
+---
+
+# 21. ANALYTICS AND DASHBOARD CALCULATIONS
+
+Implement analytics from actual records.
+
+Freelancer analytics should include:
+
+- Total applications
+- Pending applications
+- Accepted applications
+- Active contracts
+- Completed contracts
+- Total completed demo payments
+- Payment history over time
+- Application status breakdown
+- Recent activity
+
+Company analytics should include:
+
+- Total postings
+- Open postings
+- Filled postings
+- Active contracts
+- Completed contracts
+- Total applications
+- Applications awaiting review
+- Hiring conversion rate
+- Completed demo spending
+- Monthly spending
+- Contract status distribution
+
+Define all formulas explicitly.
+
+For example:
+
+Hiring conversion rate = hired applications divided by total valid applications, multiplied by 100.
+
+Handle a zero denominator safely.
+
+Use date filters consistently and explain the date range represented by charts.
+
+If there is insufficient data, show an empty chart state with guidance rather than fabricated values.
+
+---
+
+# 22. DEMO DATA AND SEEDING
+
+Create a repeatable seed script.
+
+It should insert realistic sample data for:
+
+- Freelancer accounts
+- Company accounts
+- Freelancer profiles
+- Company profiles
+- Project postings
+- Applications
+- Contracts
+- Milestones
+- Notifications
+- Payment records
+- Reviews where appropriate
+
+Use sample names and clearly fictional company identities.
+
+Create a useful variety of projects, such as:
+
+- React website development
+- Python automation
+- Machine learning prototype
+- Dashboard development
+- API development
+- UI/UX design
+- Data analytics
+
+Include different posting and application statuses so all major dashboard states can be demonstrated.
+
+Use the same password hashing mechanism as registration.
+
+Document the seeded demo credentials.
+
+Suggested development-only accounts:
+
+Freelancer: freelancer.demo@example.com
+
+Company: company.demo@example.com
+
+Use a clearly documented development-only password generated for the seed script.
+
+Never ship a production account with a known default password.
+
+Make seeding repeatable without creating duplicate accounts or duplicate business records.
+
+Do not run a destructive database reset automatically.
+
+The seed script must only target the explicitly configured development database and must refuse to run if the target looks like a production database.
+
+---
+
+# 23. SECURITY REQUIREMENTS
+
+Implement sensible protections for a college project:
+
+- Password hashing
+- Role-based access
+- Ownership checks
+- Server-side input validation
+- Safe error responses
+- Explicit CORS origins
+- Secure cookie settings where used
+- CSRF protection when using cookie-based authentication
+- Rate limiting for authentication
+- Helmet security headers
+- Protection against mass assignment
+- Safe MongoDB query construction
+- Validation of ObjectIds
+- URL validation
+- File upload restrictions if uploads are implemented
+- No secrets in frontend bundles
+- No credentials in Git
+- No sensitive information in logs
+
+Never trust role, owner ID, contract amount, payment status, or authorization claims supplied by the browser.
+
+Never allow a user to update protected fields by sending arbitrary JSON.
+
+Use explicit allowlists of fields for profile and posting updates.
+
+Do not introduce an unsafe wildcard CORS configuration with credentials enabled.
+
+If real file uploads cannot be completed safely, use validated URLs instead and document the limitation.
+
+---
+
+# 24. WINDOWS-FRIENDLY DEVELOPMENT SETUP
+
+The exported project must be straightforward to run on Windows.
+
+Provide exact commands for PowerShell and/or Command Prompt.
+
+Include:
+
+- Node.js prerequisite
+- MongoDB prerequisite
+- Installation commands
+- Environment configuration
+- Seed command
+- Development startup commands
+- Build commands
+- Test commands
+
+Prefer scripts that avoid Unix-only utilities.
+
+Create a root package.json if appropriate, with scripts such as:
+
+npm run dev
+
+npm run build
+
+npm run test
+
+Use concurrently or a similar compatible tool if a single command can run frontend and backend together reliably.
+
+Otherwise, provide two terminal commands with clear instructions.
+
+Configure the Vite development proxy to forward `/api` requests to the Express server.
+
+Avoid CORS and cookie configuration mismatches between the frontend and backend.
+
+Document the expected ports.
+
+Suggested defaults:
+
+Frontend: http://localhost:5173
+
+Backend: http://localhost:5000
+
+Health endpoint: http://localhost:5000/health
+
+Use environment configuration rather than scattering ports across source files.
+
+Do not require the frontend and backend to share a port in development.
+
+Ensure the application works after exporting the code and installing its dependencies on my laptop.
+
+---
+
+# 25. AUTOMATED TESTING
+
+Add meaningful tests for critical behavior.
+
+Backend tests should cover, where practical:
+
+- Freelancer registration
+- Company registration
+- Duplicate email rejection
+- Password hashing
+- Invalid login
+- Protected routes
+- Role restrictions
+- Posting creation
+- Posting ownership
+- Duplicate application prevention
+- Application acceptance
+- Contract creation
+- Milestone submission
+- Revision request
+- Milestone approval
+- Demo payment authorization
+- Duplicate payment prevention
+- Notification ownership
+
+Frontend tests should cover critical components and forms where practical.
+
+Use an isolated test database such as:
+
+freelance_hub_test
+
+Never run tests against the user's main development database.
+
+Do not clear a database unless the test configuration explicitly identifies it as the test database.
+
+Run the actual available commands:
+
+- Install or validate dependencies
+- Frontend build
+- Backend build or type-check
+- Automated tests
+- Basic endpoint checks
+
+Fix failures that are within scope.
+
+If a command cannot be run in the current cloud environment, clearly say so and provide the exact local command to run.
+
+Distinguish verified tests from unverified functionality.
+
+---
+
+# 26. IMPLEMENTATION ORDER — DO NOT STOP BETWEEN STAGES
+
+Execute these stages automatically.
+
+## Stage 1: Foundation
+
+- Inspect the environment and existing files.
+- Establish the project structure.
+- Create the package manifests.
+- Configure frontend and backend.
+- Configure environment variables.
+- Configure database connection.
+- Add health endpoint.
+- Add Vite API proxy.
+- Verify basic startup.
+
+## Stage 2: Authentication
+
+- Implement user model.
+- Implement registration and login.
+- Implement password hashing.
+- Implement session/token handling.
+- Implement role middleware.
+- Implement protected frontend routes.
+- Build registration and login pages.
+
+## Stage 3: Profiles and marketplace
+
+- Implement freelancer and company profiles.
+- Implement project posting models and APIs.
+- Implement project creation and editing.
+- Implement project search and filters.
+- Implement project detail pages.
+- Implement application submission and status tracking.
+
+## Stage 4: Hiring and contracts
+
+- Implement application review.
+- Implement accept/reject actions.
+- Implement safe contract creation.
+- Implement active and completed job pages.
+- Implement company posting history.
+
+## Stage 5: Milestones and payments
+
+- Implement milestone creation and management.
+- Implement deliverable submissions.
+- Implement revision requests.
+- Implement milestone approval.
+- Implement simulated payment records.
+- Enforce permissions and duplicate-request protection.
+
+## Stage 6: Dashboards and notifications
+
+- Implement both complete dashboards.
+- Implement analytics.
+- Implement persistent notifications.
+- Implement profile pages.
+- Implement review functionality if time permits.
+
+## Stage 7: Visual polish
+
+- Apply the design system.
+- Refine all pages.
+- Add loading and empty states.
+- Add responsive behavior.
+- Check navigation and forms.
+- Fix console errors.
+
+## Stage 8: Verification
+
+- Seed the database.
+- Run build and tests.
+- Fix critical failures.
+- Verify the main workflow.
+- Prepare setup instructions.
+
+Do not request approval after each stage.
+
+If time is running out, finish the core workflow before optional features such as reviews, advanced analytics, password reset emails, real file uploads, or real-time notifications.
+
+---
+
+# 27. REQUIRED END-TO-END DEMONSTRATION
+
+The most important acceptance test is:
+
+1. A company logs in.
+2. The company creates and publishes a project.
+3. A freelancer logs in.
+4. The freelancer discovers the project.
+5. The freelancer opens the project details.
+6. The freelancer submits an application.
+7. The company views the application.
+8. The company accepts the application.
+9. The system creates exactly one contract.
+10. The posting becomes Filled and appears under Previous Postings.
+11. The company and freelancer can view the contract.
+12. The company creates or manages milestones.
+13. The freelancer submits a deliverable.
+14. The company approves it or requests a revision.
+15. The company records a simulated payment for an eligible approved milestone.
+16. The payment is persisted in the database.
+17. The freelancer sees the payment record.
+18. Notifications are created for the appropriate users.
+19. Analytics reflect the resulting database state.
+20. The contract can be marked completed according to the defined completion rules.
+
+Prevent duplicate contracts and duplicate successful payment records when requests are repeated.
+
+If the system cannot complete this workflow, prioritize fixing it before adding optional functionality.
+
+---
+
+# 28. ACCEPTANCE CRITERIA
+
+The application is ready for demonstration when:
+
+- The frontend starts successfully.
+- The backend starts successfully.
+- MongoDB connection works in the local environment.
+- Both roles can register and log in.
+- Role-specific dashboards load.
+- Protected routes and backend permissions work.
+- A company can create a posting.
+- A freelancer can apply.
+- The company can review and accept the application.
+- A contract is created and persisted.
+- Milestone submissions and approval work.
+- Simulated payment records persist.
+- Notifications work.
+- The company has both Active Postings and Previous Postings.
+- Analytics use real data.
+- Forms have useful validation.
+- Main buttons perform real actions.
+- The interface works at desktop and mobile sizes.
+- The project can be exported and run locally using documented steps.
+- Critical build and test failures have been fixed or explicitly documented.
+
+---
+
+# 29. FINAL DELIVERABLES
+
+When implementation is complete, provide:
+
+1. Summary of the actual implementation.
+2. Final project folder structure.
+3. Frontend and backend technology versions.
+4. Database schema summary.
+5. Complete list of implemented routes.
+6. Required environment variables.
+7. Exact Windows installation commands.
+8. Exact startup commands.
+9. Database seeding instructions.
+10. Demo credentials.
+11. Frontend URL and backend URL.
+12. Health-check instructions.
+13. Build and test results, distinguishing executed tests from unexecuted tests.
+14. Known limitations.
+15. Instructions for exporting and running the application locally.
+16. Any remaining steps needed for production deployment.
+
+Do not claim that the app is deployed unless deployment actually occurred.
+
+Do not claim that a real payment system exists.
+
+Do not claim local MongoDB works in the cloud preview unless it was actually configured and verified.
+
+---
+
+# FINAL COMMAND
+
+Start building Freelance Hub immediately.
+
+Inspect the environment, create the real files, implement the core features, test the application, fix errors, and continue through the implementation stages without stopping for approval.
+
+Prioritize a complete, working, professional MVP over unnecessary complexity.
+
+I have only tonight. Make sensible decisions autonomously, preserve existing work, and deliver the strongest working application possible.
